@@ -1,13 +1,14 @@
 
 // "Class" for calculating CRC8 checksums...
-function CRC8(polynomial) { // constructor takes an optional polynomial type from CRC8.POLY
+function CRC8(polynomial, initial_value) { // constructor takes an optional polynomial type from CRC8.POLY
   if (polynomial == null) polynomial = CRC8.POLY.CRC8_CCITT
   this.table = CRC8.generateTable(polynomial);
+  this.initial_value = initial_value;
 }
 
 // Returns the 8-bit checksum given an array of byte-sized numbers
 CRC8.prototype.checksum = function(byte_array) {
-  var c = 0
+  var c = this.initial_value;
 
   for (var i = 0; i < byte_array.length; i++ ) 
     c = this.table[(c ^ byte_array[i]) % 256] 
